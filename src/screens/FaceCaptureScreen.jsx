@@ -113,7 +113,7 @@ const FaceCaptureScreen = () => {
     <div
       className="screen-container"
       style={{
-        backgroundImage: "url(/images/bg.png)",
+        backgroundImage: "url(/images/common_bg.png)",
         backgroundColor: "#0f172a",
       }}
     >
@@ -124,7 +124,7 @@ const FaceCaptureScreen = () => {
             width: "708px",
             height: "916px",
             margin: "0 auto",
-            border: "20px solid #FFCE00",
+            border: "20px solid #0EC8F0",
             marginTop: "340px",
 
             overflow: "hidden",
@@ -183,7 +183,7 @@ const FaceCaptureScreen = () => {
               onClick={startCapture}
               style={{
                 width: "690px",
-                height: "185px",
+                height: "202px",
                 fontSize: "80px",
                 fontWeight: "600",
                 backgroundImage: "url(/images/capturebg.png)",

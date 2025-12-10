@@ -91,7 +91,7 @@ const LoadingScreen = () => {
                   {`
                     .loader {
                       border: 16px solid rgba(255, 255, 255, 0.1);
-                      border-top: 16px solid #FFCE00;
+                      border-top: 16px solid #0EC8F0;
                       border-radius: 50%;
                       width: 120px;
                       height: 120px;

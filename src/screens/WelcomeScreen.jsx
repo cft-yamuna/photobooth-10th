@@ -21,11 +21,10 @@ const WelcomeScreen = () => {
           onClick={handleStart}
           style={{
             position: "absolute",
-            marginTop: "20%",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "1070px",
-            height: "558px",
+            width: "730px",
+            height: "208px",
             fontSize: "75px",
             fontWeight: "600",
             backgroundImage: "url(/images/startbg.png)",

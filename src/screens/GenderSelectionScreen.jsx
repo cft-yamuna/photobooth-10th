@@ -128,11 +128,11 @@ const GenderSelectionScreen = () => {
             onClick={handleContinue}
             style={{
               position: "absolute",
-              bottom: "-70%",
+              bottom: "-40%",
               left: "50%",
               transform: "translateX(-50%)",
-              width: "941px",
-              height: "482px",
+            width: "530.96px",
+            height: "155.15px",
               fontSize: "75px",
               fontWeight: "600",
               backgroundImage: "url(/images/continuebg.png)",

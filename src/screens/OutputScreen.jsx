@@ -19,8 +19,8 @@ const OutputScreen = () => {
       width: 200,
       margin: 2,
       color: {
-        dark: "#000000",
-        light: "#ffffff",
+        dark: "#ffffff",
+        light: "#00000000",
       },
     })
       .then((url) => {
@@ -40,7 +40,7 @@ const OutputScreen = () => {
     <div
       className="screen-container"
       style={{
-        backgroundImage: "url(/images/bg.png)",
+        backgroundImage: "url(/images/common_bg.png)",
         backgroundColor: "#0f172a",
       }}
     >
@@ -58,32 +58,17 @@ const OutputScreen = () => {
           }}
         >
 
-          {/* Output Image with Background */}
-          <div
+          {/* Output Image */}
+          <img
+            src={outputImageUrl}
+            alt="Transformed"
             style={{
-              width: "750px",
-              height: "1130px",
-              backgroundImage: "url(/images/output_bg.png)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              flexShrink: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              width: "662px",
+              height: "1029px",
+              display: "block",
+              objectFit: "cover",
             }}
-          >
-            <img
-              src={outputImageUrl}
-              alt="Transformed"
-              style={{
-                width: "662px",
-                height: "1029px",
-                display: "block",
-                objectFit: "cover",
-                borderRadius:"113px"
-              }}
-            />
-          </div>
+          />
 
           {/* QR Code and Restart Section */}
           <div
@@ -94,6 +79,9 @@ const OutputScreen = () => {
               gap: "30px",
               marginTop: "43px",
               marginBottom: "80px",
+              backgroundColor: "#0B2860",
+              padding: "30px 40px",
+              // borderRadius: "15px",
             }}
           >
             {/* QR Code on the left */}
@@ -104,9 +92,6 @@ const OutputScreen = () => {
                 style={{
                   width: "180px",
                   height: "180px",
-                  backgroundColor: "white",
-                  padding: "8px",
-                  borderRadius: "10px",
                 }}
               />
             )}
@@ -138,18 +123,14 @@ const OutputScreen = () => {
               <button
                 onClick={handleStartOver}
                 style={{
-                  width: "280px",
-                  height: "70px",
-                  fontSize: "32px",
-                  fontWeight: "700",
-                  backgroundColor: "#dc2626",
-                  color: "white",
+                  width: "307px",
+                  height: "90px",
+                  backgroundImage: "url(/images/restart.png)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundColor: "transparent",
                   border: "none",
-                  borderRadius: "8px",
                   cursor: "pointer",
-                  fontFamily: "var(--font-family)",
-                  textTransform: "uppercase",
-                  letterSpacing: "2px",
                   transition: "all 0.3s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -159,7 +140,6 @@ const OutputScreen = () => {
                   e.target.style.transform = "scale(1)";
                 }}
               >
-                Restart
               </button>
             </div>
           </div>

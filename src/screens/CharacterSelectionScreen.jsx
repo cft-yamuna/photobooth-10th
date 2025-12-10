@@ -10,6 +10,10 @@ const CharacterSelectionScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCharacter, setSelectedCharacterLocal] = useState(null);
 
+  // Helper to get previous and next indices
+  const getPrevIndex = () => (currentIndex === 0 ? characters.length - 1 : currentIndex - 1);
+  const getNextIndex = () => (currentIndex === characters.length - 1 ? 0 : currentIndex + 1);
+
   // Hardcoded URLs as requested
   const BASE_URL =
     "https://ozkbnimjuhaweigscdby.supabase.co/storage/v1/object/public/phonepe_character_images";
@@ -27,7 +31,7 @@ const CharacterSelectionScreen = () => {
     const chars = [];
     const genderPath = gender.toLowerCase();
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 6; i++) {
       const num = i.toString().padStart(2, "0");
       const filename = `${genderPath}${num}.png`;
 
@@ -96,104 +100,172 @@ const CharacterSelectionScreen = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "40px",
               marginTop: "60px",
+              position: "relative",
+              overflow: "hidden",
+              width: "100%",
             }}
           >
-            {/* Left Arrow Button */}
-            <button
-              onClick={handlePrevious}
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-                width: "80px",
-                height: "80px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.1)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
-              }}
-            >
-              <img
-                src="/images/back.png"
-                alt="Previous"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-              />
-            </button>
-
-            {/* Character Image */}
+            {/* Carousel Container */}
             <div
-              onClick={handleCharacterSelect}
               style={{
-                cursor: "pointer",
-                transition: "transform 0.2s ease",
-                border: selectedCharacter?.id === characters[currentIndex]?.id
-                  ? ""
-                  : "4px solid transparent",
-                borderRadius: "8px",
-                padding: "8px",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              <img
-                src={characters[currentIndex].displayUrl}
-                alt={characters[currentIndex].name}
-                style={{
-                  width: "600px",
-                  height: "950px",
-                  objectFit: "contain",
-                  display: "block",
-                }}
-              />
-            </div>
-
-            {/* Right Arrow Button */}
-            <button
-              onClick={handleNext}
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-                width: "80px",
-                height: "80px",
-                cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.1)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
+                position: "relative",
+                width: "900px",
+                height: "800px",
+                overflow: "hidden",
               }}
             >
-              <img
-                src="/images/front.png"
-                alt="Next"
+              {/* Previous Character Image (partially visible on left, smaller) */}
+              <div
+                onClick={handlePrevious}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
+                  position: "absolute",
+                  left: "-200px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  zIndex: 1,
+                  opacity: 0.7,
                 }}
-              />
-            </button>
+              >
+                <img
+                  src={characters[getPrevIndex()].displayUrl}
+                  alt="Previous character"
+                  style={{
+                    width: "400px",
+                    height: "600px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </div>
+
+              {/* Active Character Image (center, bigger) */}
+              <div
+                onClick={handleCharacterSelect}
+                style={{
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  zIndex: 5,
+                  position: "relative",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.02)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <img
+                  src={characters[currentIndex].displayUrl}
+                  alt={characters[currentIndex].name}
+                  style={{
+                    width: "550px",
+                    height: "820px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+
+                {/* Left Arrow - overlayed on center image */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevious();
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: "30px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    zIndex: 10,
+                    padding: "15px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-50%) scale(1.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "100px",
+                      color: "white",
+                      fontWeight: "bold",
+                      textShadow: "3px 3px 6px rgba(0,0,0,0.7)",
+                    }}
+                  >
+                    &#171;
+                  </span>
+                </button>
+
+                {/* Right Arrow - overlayed on center image */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNext();
+                  }}
+                  style={{
+                    position: "absolute",
+                    right: "30px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    zIndex: 10,
+                    padding: "15px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-50%) scale(1.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "100px",
+                      color: "white",
+                      fontWeight: "bold",
+                      textShadow: "3px 3px 6px rgba(0,0,0,0.7)",
+                    }}
+                  >
+                    &#187;
+                  </span>
+                </button>
+              </div>
+
+              {/* Next Character Image (partially visible on right, smaller) */}
+              <div
+                onClick={handleNext}
+                style={{
+                  position: "absolute",
+                  right: "-200px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  zIndex: 1,
+                  opacity: 0.7,
+                }}
+              >
+                <img
+                  src={characters[getNextIndex()].displayUrl}
+                  alt="Next character"
+                  style={{
+                    width: "400px",
+                    height: "600px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
 
@@ -206,11 +278,11 @@ const CharacterSelectionScreen = () => {
               bottom: "-200px",
               left: "50%",
               transform: "translateX(-50%)",
-              width: "411.58px",
-              height: "157.88px",
+              width: "581.58px",
+              height: "167.88px",
               fontSize: "75px",
               fontWeight: "600",
-              backgroundImage: "url(/images/next.png)",
+              backgroundImage: "url(/images/continuebg.png)",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundColor: "transparent",
