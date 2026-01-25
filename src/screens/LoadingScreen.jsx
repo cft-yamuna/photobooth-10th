@@ -33,28 +33,48 @@ const LoadingScreen = () => {
           canvas.width = frameImg.width;
           canvas.height = frameImg.height;
 
-          // Fixed size for inside image to fill frame
-          const scaledWidth = 1150;
-          const scaledHeight = 1650;
+          // Target size for inside image area
+          const targetWidth = 1150;
+          const targetHeight = 1650;
+
+          // Calculate aspect ratio preserving dimensions (cover mode)
+          const imgAspect = outputImg.width / outputImg.height;
+          const targetAspect = targetWidth / targetHeight;
+
+          let drawWidth, drawHeight, offsetX, offsetY;
+
+          if (imgAspect > targetAspect) {
+            // Image is wider - fit by height, crop width
+            drawHeight = targetHeight;
+            drawWidth = targetHeight * imgAspect;
+            offsetX = (targetWidth - drawWidth) / 2;
+            offsetY = 0;
+          } else {
+            // Image is taller - fit by width, crop height
+            drawWidth = targetWidth;
+            drawHeight = targetWidth / imgAspect;
+            offsetX = 0;
+            offsetY = (targetHeight - drawHeight) / 2;
+          }
 
           // Calculate position to center horizontally and vertically
-          const x = (frameImg.width - scaledWidth) / 2;
-          const y = (frameImg.height - scaledHeight) / 2;
+          const x = (frameImg.width - targetWidth) / 2;
+          const y = (frameImg.height - targetHeight) / 2;
 
           // Draw output image with border radius on left side only
           const radius = 120;
           ctx.save();
           ctx.beginPath();
           ctx.moveTo(x + radius, y);
-          ctx.lineTo(x + scaledWidth, y);
-          ctx.lineTo(x + scaledWidth, y + scaledHeight);
-          ctx.lineTo(x + radius, y + scaledHeight);
-          ctx.arcTo(x, y + scaledHeight, x, y + scaledHeight - radius, radius);
+          ctx.lineTo(x + targetWidth, y);
+          ctx.lineTo(x + targetWidth, y + targetHeight);
+          ctx.lineTo(x + radius, y + targetHeight);
+          ctx.arcTo(x, y + targetHeight, x, y + targetHeight - radius, radius);
           ctx.lineTo(x, y + radius);
           ctx.arcTo(x, y, x + radius, y, radius);
           ctx.closePath();
           ctx.clip();
-          ctx.drawImage(outputImg, x, y, scaledWidth, scaledHeight);
+          ctx.drawImage(outputImg, x + offsetX, y + offsetY, drawWidth, drawHeight);
           ctx.restore();
 
           // Draw frame on top
