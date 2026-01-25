@@ -40,7 +40,7 @@ const OutputScreen = () => {
     <div
       className="screen-container"
       style={{
-        backgroundImage: "url(/images/common_bg.png)",
+        backgroundImage: "url(/images/output_bg.png)",
         backgroundColor: "#0f172a",
       }}
     >
@@ -79,7 +79,7 @@ const OutputScreen = () => {
               gap: "30px",
               marginTop: "43px",
               marginBottom: "80px",
-              backgroundColor: "#0B2860",
+              backgroundColor: "transparent",
               padding: "30px 40px",
               // borderRadius: "15px",
             }}
@@ -123,8 +123,8 @@ const OutputScreen = () => {
               <button
                 onClick={handleStartOver}
                 style={{
-                  width: "307px",
-                  height: "90px",
+                  width: "450px",
+                  height: "100px",
                   backgroundImage: "url(/images/restart.png)",
                   backgroundSize: "cover",
                   backgroundPosition: "center",

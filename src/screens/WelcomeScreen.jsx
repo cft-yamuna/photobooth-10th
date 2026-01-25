@@ -22,6 +22,7 @@ const WelcomeScreen = () => {
           style={{
             position: "absolute",
             left: "50%",
+            top: "600px",
             transform: "translateX(-50%)",
             width: "730px",
             height: "208px",

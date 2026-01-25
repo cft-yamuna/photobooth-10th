@@ -118,19 +118,43 @@ const FaceCaptureScreen = () => {
       }}
     >
       <div className="screen-content">
+        {/* Capture title image */}
+        <img
+          src="/images/capturet.png"
+          alt="Capture"
+          style={{
+            position: "absolute",
+            top: "100px",
+            left: "50px",
+          }}
+        />
+
         <div
           style={{
             position: "relative",
             width: "708px",
             height: "916px",
             margin: "0 auto",
-            border: "20px solid #0EC8F0",
             marginTop: "340px",
-
             overflow: "hidden",
             backgroundColor: "#000",
+            borderRadius: "140px 0 0 210px",
           }}
         >
+          {/* Frame overlay */}
+          <img
+            src="/images/frame.png"
+            alt="Frame"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 5,
+              pointerEvents: "none",
+            }}
+          />
           <Webcam
             audio={false}
             ref={webcamRef}

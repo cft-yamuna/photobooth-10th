@@ -12,6 +12,64 @@ const LoadingScreen = () => {
   const [statusMessage, setStatusMessage] = useState("Initializing...");
   const [hasError, setHasError] = useState(false);
 
+  // Function to add frame to output image
+  const addFrameToImage = async (imageUrl) => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const outputImg = new Image();
+      const frameImg = new Image();
+
+      outputImg.crossOrigin = "anonymous";
+      frameImg.crossOrigin = "anonymous";
+
+      let imagesLoaded = 0;
+
+      const onImageLoad = () => {
+        imagesLoaded++;
+        if (imagesLoaded === 2) {
+          // Set canvas size to frame size
+          canvas.width = frameImg.width;
+          canvas.height = frameImg.height;
+
+          // Scale down the output image (60% of original size)
+          const scale = 0.6;
+          const scaledWidth = outputImg.width * scale;
+          const scaledHeight = outputImg.height * scale;
+
+          // Calculate position to center horizontally, move down vertically
+          const x = (frameImg.width - scaledWidth) / 2;
+          const y = (frameImg.height - scaledHeight) / 2 + 150;
+
+          // Draw output image first (behind) with scaled dimensions
+          ctx.drawImage(outputImg, x, y, scaledWidth, scaledHeight);
+
+          // Draw frame on top
+          ctx.drawImage(frameImg, 0, 0);
+
+          // Convert canvas to blob
+          canvas.toBlob(
+            (blob) => {
+              resolve(blob);
+            },
+            "image/png",
+            1.0
+          );
+        }
+      };
+
+      outputImg.onload = onImageLoad;
+      frameImg.onload = onImageLoad;
+
+      outputImg.onerror = () => reject(new Error("Failed to load output image"));
+      frameImg.onerror = () => reject(new Error("Failed to load frame image"));
+
+      outputImg.src = imageUrl;
+      frameImg.src = "/images/outputframe.png";
+    });
+  };
+
   useEffect(() => {
     if (!uniqueId || !userImageUrl || !characterImageUrl) {
       navigate("/");
@@ -53,7 +111,26 @@ const LoadingScreen = () => {
         throw new Error("Processing timeout or failed");
       }
 
-      setOutputImageUrl(outputUrl);
+      setStatusMessage("Adding frame to your image...");
+
+      // Add frame to the output image
+      const framedImageBlob = await addFrameToImage(outputUrl);
+
+      // Upload framed image to Supabase
+      const framedImageUrl = await supabaseService.uploadImageBytes(
+        framedImageBlob,
+        uniqueId,
+        { prefix: "framed_", extension: ".png" }
+      );
+
+      if (!framedImageUrl) {
+        throw new Error("Failed to upload framed image");
+      }
+
+      // Update the output URL in database with framed version
+      await supabaseService.updateOutputImage(uniqueId, framedImageUrl);
+
+      setOutputImageUrl(framedImageUrl);
 
       setStatusMessage("Complete! Redirecting...");
       setTimeout(() => {

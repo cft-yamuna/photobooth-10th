@@ -31,7 +31,7 @@ const CharacterSelectionScreen = () => {
     const chars = [];
     const genderPath = gender.toLowerCase();
 
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 3; i++) {
       const num = i.toString().padStart(2, "0");
       const filename = `${genderPath}${num}.png`;
 
@@ -75,7 +75,7 @@ const CharacterSelectionScreen = () => {
     <div
       className="screen-container"
       style={{
-        backgroundImage: "url(/images/common_bg.png)",
+        backgroundImage: "url(/images/templatebg.png)",
         backgroundColor: "#0f172a",
       }}
     >
@@ -91,7 +91,6 @@ const CharacterSelectionScreen = () => {
             textAlign: "center",
           }}
         >
-          SELECT YOUR STYLE
         </h2>
 
         {characters.length > 0 && (
@@ -118,12 +117,24 @@ const CharacterSelectionScreen = () => {
                 overflow: "hidden",
               }}
             >
+              {/* Left border bar */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: "45px",
+                  width: "10px",
+                  height: "625px",
+                  backgroundColor: "#47BAFF",
+                  zIndex: 2,
+                }}
+              />
+
               {/* Previous Character Image (partially visible on left, smaller) */}
               <div
                 onClick={handlePrevious}
                 style={{
                   position: "absolute",
-                  left: "-200px",
+                  left: "50px",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
                   zIndex: 1,
@@ -134,8 +145,8 @@ const CharacterSelectionScreen = () => {
                   src={characters[getPrevIndex()].displayUrl}
                   alt="Previous character"
                   style={{
-                    width: "400px",
-                    height: "600px",
+                    width: "350px",
+                    height: "850px",
                     objectFit: "contain",
                     display: "block",
                   }}
@@ -163,7 +174,7 @@ const CharacterSelectionScreen = () => {
                   alt={characters[currentIndex].name}
                   style={{
                     width: "550px",
-                    height: "820px",
+                    height: "1020px",
                     objectFit: "contain",
                     display: "block",
                   }}
@@ -242,12 +253,24 @@ const CharacterSelectionScreen = () => {
                 </button>
               </div>
 
+              {/* Right border bar */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: "45px",
+                  width: "10px",
+                  height: "625px",
+                  backgroundColor: "#47BAFF",
+                  zIndex: 2,
+                }}
+              />
+
               {/* Next Character Image (partially visible on right, smaller) */}
               <div
                 onClick={handleNext}
                 style={{
                   position: "absolute",
-                  right: "-200px",
+                  right: "50px",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
                   zIndex: 1,
@@ -258,8 +281,8 @@ const CharacterSelectionScreen = () => {
                   src={characters[getNextIndex()].displayUrl}
                   alt="Next character"
                   style={{
-                    width: "400px",
-                    height: "600px",
+                    width: "350px",
+                    height: "850px",
                     objectFit: "contain",
                     display: "block",
                   }}

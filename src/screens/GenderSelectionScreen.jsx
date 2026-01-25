@@ -31,9 +31,13 @@ const GenderSelectionScreen = () => {
             fontSize: "80px",
             fontWeight: "700",
             color: "white",
-            marginBottom: "40px",
             textTransform: "uppercase",
             textAlign: "center",
+            position: "absolute",
+            bottom: "700px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "800px",
           }}
         >
           SELECT GENDER
@@ -80,7 +84,6 @@ const GenderSelectionScreen = () => {
                 textTransform: "uppercase",
               }}
             >
-              MALE
             </span>
           </div>
 
@@ -117,7 +120,6 @@ const GenderSelectionScreen = () => {
                 textTransform: "uppercase",
               }}
             >
-              FEMALE
             </span>
           </div>
         </div>
