@@ -35,7 +35,7 @@ const LoadingScreen = () => {
 
           // Target size for inside image area
           const targetWidth = 1150;
-          const targetHeight = 1650;
+          const targetHeight = 1680;
 
           // Calculate aspect ratio preserving dimensions (cover mode)
           const imgAspect = outputImg.width / outputImg.height;
@@ -62,16 +62,17 @@ const LoadingScreen = () => {
           const y = (frameImg.height - targetHeight) / 2;
 
           // Draw output image with border radius on left side only
-          const radius = 120;
+          const topLeftRadius = 120;
+          const bottomLeftRadius = 300;
           ctx.save();
           ctx.beginPath();
-          ctx.moveTo(x + radius, y);
+          ctx.moveTo(x + topLeftRadius, y);
           ctx.lineTo(x + targetWidth, y);
           ctx.lineTo(x + targetWidth, y + targetHeight);
-          ctx.lineTo(x + radius, y + targetHeight);
-          ctx.arcTo(x, y + targetHeight, x, y + targetHeight - radius, radius);
-          ctx.lineTo(x, y + radius);
-          ctx.arcTo(x, y, x + radius, y, radius);
+          ctx.lineTo(x + bottomLeftRadius, y + targetHeight);
+          ctx.arcTo(x, y + targetHeight, x, y + targetHeight - bottomLeftRadius, bottomLeftRadius);
+          ctx.lineTo(x, y + topLeftRadius);
+          ctx.arcTo(x, y, x + topLeftRadius, y, topLeftRadius);
           ctx.closePath();
           ctx.clip();
           ctx.drawImage(outputImg, x + offsetX, y + offsetY, drawWidth, drawHeight);

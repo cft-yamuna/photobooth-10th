@@ -16,7 +16,7 @@ const OutputScreen = () => {
 
     // Generate QR code for the output image URL
     QRCode.toDataURL(outputImageUrl, {
-      width: 200,
+      width: 300,
       margin: 2,
       color: {
         dark: "#ffffff",
@@ -54,7 +54,6 @@ const OutputScreen = () => {
             width: "100%",
             height: "100%",
             paddingTop: "123px",
-            marginTop: "230px",
           }}
         >
 
@@ -63,8 +62,8 @@ const OutputScreen = () => {
             src={outputImageUrl}
             alt="Transformed"
             style={{
-              width: "662px",
-              height: "1029px",
+              width: "800px",
+              height: "1244px",
               display: "block",
               objectFit: "cover",
             }}
@@ -90,8 +89,8 @@ const OutputScreen = () => {
                 src={qrCodeDataUrl}
                 alt="QR Code"
                 style={{
-                  width: "180px",
-                  height: "180px",
+                  width: "270px",
+                  height: "270px",
                 }}
               />
             )}
