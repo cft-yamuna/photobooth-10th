@@ -36,6 +36,61 @@ const OutputScreen = () => {
     navigate("/");
   };
 
+  const handlePrint = () => {
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Photo</title>
+          <style>
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
+            @page {
+              size: 4in 6in;
+              margin: 0;
+            }
+            html, body {
+              width: 4in;
+              height: 6in;
+              overflow: hidden;
+            }
+            body {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background: white;
+            }
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+            @media print {
+              html, body {
+                width: 4in;
+                height: 6in;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+              img {
+                width: 4in;
+                height: 6in;
+                object-fit: contain;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <img src="${outputImageUrl}" onload="window.print(); window.close();" />
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   return (
     <div
       className="screen-container"
@@ -117,6 +172,34 @@ const OutputScreen = () => {
               >
                 Scan to Download
               </p>
+
+              {/* Print Button */}
+              <button
+                onClick={handlePrint}
+                style={{
+                  width: "450px",
+                  height: "100px",
+                  backgroundColor: "#00AEEF",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  color: "white",
+                  fontSize: "32px",
+                  fontWeight: "700",
+                  fontFamily: "var(--font-family)",
+                  textTransform: "uppercase",
+                  letterSpacing: "2px",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = "scale(1)";
+                }}
+              >
+                Print
+              </button>
 
               {/* Restart Button */}
               <button
