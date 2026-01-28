@@ -44,41 +44,62 @@ const OutputScreen = () => {
           <title>Print Photo</title>
           <style>
             * {
-              margin: 0;
-              padding: 0;
+              margin: 0 !important;
+              padding: 0 !important;
               box-sizing: border-box;
+              border: none !important;
             }
             @page {
               size: 4in 6in;
-              margin: 0;
+              margin: 0 !important;
+              padding: 0 !important;
             }
             html, body {
               width: 4in;
               height: 6in;
+              margin: 0 !important;
+              padding: 0 !important;
               overflow: hidden;
+              border: none !important;
             }
             body {
-              display: flex;
-              justify-content: center;
-              align-items: center;
+              display: block;
               background: white;
             }
             img {
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
+              display: block;
+              width: 4in;
+              height: 6in;
+              object-fit: cover;
+              border: none !important;
+              outline: none !important;
+              margin: 0 !important;
+              padding: 0 !important;
             }
             @media print {
+              @page {
+                size: 4in 6in;
+                margin: 0 !important;
+                padding: 0 !important;
+              }
               html, body {
                 width: 4in;
                 height: 6in;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
               }
               img {
+                display: block;
                 width: 4in;
                 height: 6in;
-                object-fit: contain;
+                object-fit: cover;
+                border: none !important;
+                outline: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
               }
             }
           </style>
